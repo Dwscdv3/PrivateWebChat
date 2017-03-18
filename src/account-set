@@ -1,0 +1,16 @@
+<?php
+
+$_SERVER["DOCUMENT_ROOT"] = dirname(__FILE__);
+
+require_once "conf.php";
+require_once "common/pdo.php";
+
+if ($argc == 3) {
+    if (strpos($argv[1], Constants::$SEPARATOR) !== false) {
+        exit("Failed. Illegal characters found.");
+    }
+    $salt = bin2hex(random_bytes(64));
+    $add = Data::$pdo->prepare(Data::account_ADD_username_password_salt);
+    $add->execute([$argv[1], hash("sha512", $argv[2].$salt), $salt]);
+    echo "Succeed.";
+}

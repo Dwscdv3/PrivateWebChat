@@ -1,38 +1,65 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT']."/conf.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/conf.php";
+require_once "pdo.php";
 
 class Account
 {
-    public static function GetToken($username, $password)
+    public static function GetToken($username, $password, $expire = null)
     {
-        if (file_exists(Constants::$ACCOUNT_PATH.$username)) {
-            $_accountInfo = explode("\n", file_get_contents(Constants::$ACCOUNT_PATH.$username));
-            $correctHash = $_accountInfo[0];
-            $salt = $_accountInfo[1];
-            $pwdHash = hash("sha512", $password.$salt);
-            if ($pwdHash === $correctHash) {
-                $r = random_bytes(16);
-                file_put_contents(Constants::$TOKEN_PATH.$r, $username);
-                return $r;
+        if (isset($_SERVER["REMOTE_ADDR"])) {
+            $query = Data::$pdo->prepare(Data::account_QUERY_password_salt_BY_username);
+            if ($query->execute([$username])) {
+                if ($_accountInfo = $query->fetch()) {
+                    $correctHash = $_accountInfo["password"];
+                    $salt = $_accountInfo["salt"];
+                    $pwdHash = hash("sha512", $password.$salt);
+                    if ($pwdHash === $correctHash) {
+                        $datetime = new DateTime();
+                        if ($expire === null) {
+                            $datetime->setTimestamp(time());
+                            $datetime->add(new DateInterval("P7D"));
+                        } else {
+                            $datetime->setTimestamp($expire);
+                        }
+                        $expireString = $datetime->format(Data::DATE_FORMAT);
+                        
+                        $token = bin2hex(random_bytes(16));
+                        $update = Data::$pdo->prepare(Data::account_SET_token_ipv4_expire_BY_username);
+                        if ($update->execute([$token, ip2long($_SERVER["REMOTE_ADDR"]), $expireString, $username])) {
+                            return $token;
+                        } else {
+                            // SQL failed
+                        }
+                    }
+                }
+            } else {
+                // SQL failed
             }
         }
         return false;
     }
     public static function ValidateToken($token)
     {
-        if (file_exists(Constants::$TOKEN_PATH.$token)) {
-            if (isset($_SERVER["REMOTE_ADDR"])) {
-                $_tokenInfo = explode("\n", file_get_contents(Constants::$TOKEN_PATH.$token));
-                $ip = $_tokenInfo[0];
-                $expire = (int)$_tokenInfo[1];
-                if ($_SERVER["REMOTE_ADDR"] === $ip) {
-                    if (time() <= $expire) {
-                        return true;
+        if (isset($_SERVER["REMOTE_ADDR"])) {
+            $query = Data::$pdo->prepare(Data::account_QUERY_ipv4_expire_BY_token);
+            if ($query->execute([$token])) {
+                if ($_tokenInfo = $query->fetch()) {
+                    $ip = intval($_tokenInfo["ipv4"]);
+                    $expire = strtotime($_tokenInfo["expire"]);
+                    if (ip2long($_SERVER["REMOTE_ADDR"]) === $ip) {
+                        if (time() <= $expire) {
+                            return true;
+                        }
                     }
+                    $remove = Data::$pdo->prepare(Data::account_REMOVE_token_ipv4_expire_BY_token);
+                    $remove->execute([$token]);
+                } else {
+                    // Token not found
                 }
+            } else {
+                // SQL failed
             }
-            unlink(Constants::$TOKEN_PATH.$token);
         }
         return false;
     }

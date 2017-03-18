@@ -2,15 +2,19 @@
 
 class Constants
 {
-    public static $DATA_PATH, $ACCOUNT_PATH, $TOKEN_PATH, $IMAGE_PATH, $CHAT_LOG_PATH;
+    public static $SEPARATOR, $DATA_PATH, $DB_INFO_PATH, $AVATAR_PATH, $IMAGE_PATH;
     
     static function init()
     {
-        Constants::$DATA_PATH = $_SERVER["DOCUMENT_ROOT"]."/data";
-        Constants::$ACCOUNT_PATH = self::$DATA_PATH."/accounts/";
-        Constants::$TOKEN_PATH = self::$DATA_PATH."/tokens/";
-        Constants::$IMAGE_PATH = self::$DATA_PATH."/images/";
-        Constants::$CHAT_LOG_PATH = self::$DATA_PATH."/chatlog";
+        self::$SEPARATOR = " | ";
+        if (empty($_SERVER["DOCUMENT_ROOT"])) {
+            self::$DATA_PATH = "./data";
+        } else {
+            self::$DATA_PATH = $_SERVER["DOCUMENT_ROOT"]."/data";
+        }
+        self::$DB_INFO_PATH = self::$DATA_PATH."/db-info";
+        self::$AVATAR_PATH = self::$DATA_PATH."/avatars/";
+        self::$IMAGE_PATH = self::$DATA_PATH."/images/";
     }
 }
 
