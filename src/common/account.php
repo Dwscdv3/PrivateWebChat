@@ -1,7 +1,7 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"]."/conf.php";
-require_once "pdo.php";
+require_once __DIR__."/../conf.php";
+require_once __DIR__."/pdo.php";
 
 class Account
 {

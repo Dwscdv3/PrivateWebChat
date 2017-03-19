@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"]."/conf.php";
+require_once __DIR__."/../conf.php";
 
 class Data
 {
@@ -9,10 +9,12 @@ class Data
                  account_ADD_username_password_salt = "INSERT INTO account (username, password, salt) VALUES (?, ?, ?)",
                  account_QUERY_password_salt_BY_username = "SELECT password, salt FROM account WHERE username = ?",
                  account_SET_token_ipv4_expire_BY_username = "UPDATE account SET token = ?, ipv4 = ?, expire = ? WHERE username = ?",
-                 account_QUERY_uid_BY_token = "SELECT uid FROM account WHERE token = ?",
+                 account_QUERY_id_BY_token = "SELECT id FROM account WHERE token = ?",
                  account_QUERY_ipv4_expire_BY_token = "SELECT ipv4, expire FROM account WHERE token = ?",
                  account_REMOVE_token_ipv4_expire_BY_token = "UPDATE account SET token = NULL ipv4 = NULL, expire = NULL WHERE token = ?",
-                 chatlog_ADD_uid_time_content = "INSERT INTO chatlog (uid, time, content) VALUES (?, ?, ?)";
+                 chatlog_QUERY_MAX_id = "SELECT MAX(id) FROM chatlog",
+                 chatlog_ADD_uid_time_content = "INSERT INTO chatlog (uid, time, content) VALUES (?, ?, ?)",
+                 chatlog_QUERY_id_uid_time_content_BY_id_RANGE = "SELECT id, uid, time, content FROM chatlog WHERE id >= ? AND id <= ?";
 
     static function init()
     {

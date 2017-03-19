@@ -1,7 +1,7 @@
 <?php
 
-require_once $_SERVER["DOCUMENT_ROOT"]."/conf.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/common/account.php";
+require_once __DIR__."/../conf.php";
+require_once __DIR__."/../common/account.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!empty($_REQUEST["username"]) &&

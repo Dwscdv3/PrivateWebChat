@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT']."/conf.php";
+require_once __DIR__."/conf.php";
 
 if (file_exists("./.setuplock")) {
     exit("Forbidden");

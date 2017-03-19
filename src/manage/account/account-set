@@ -1,9 +1,7 @@
 <?php
 
-$_SERVER["DOCUMENT_ROOT"] = dirname(__FILE__);
-
-require_once "conf.php";
-require_once "common/pdo.php";
+require_once __DIR__."/../../conf.php";
+require_once __DIR__."/../../common/pdo.php";
 
 if ($argc == 3) {
     if (strpos($argv[1], Constants::$SEPARATOR) !== false) {
