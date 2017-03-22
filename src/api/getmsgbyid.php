@@ -1,8 +1,6 @@
 <?php
 
 require_once __DIR__."/../conf.php";
-require_once __DIR__."/../common/pdo.php";
-require_once __DIR__."/../common/account.php";
 
 if (!empty($_REQUEST["token"]) &&
     strlen($_REQUEST["token"]) == 32 &&
@@ -23,6 +21,9 @@ if (!empty($_REQUEST["token"]) &&
         exit();
     }
 
+    require_once __DIR__."/../common/pdo.php";
+    require_once __DIR__."/../common/account.php";
+
     if (empty($_REQUEST["id"])) {
         if ($count < 0) {
             $query = Data::$pdo->prepare(Data::chatlog_QUERY_MAX_id);
@@ -41,7 +42,7 @@ if (!empty($_REQUEST["token"]) &&
             exit();
         }
     }
-
+    
     if (Account::ValidateToken($token)) {
         $min = $count > 0 ? $id : $id + $count + 1;
         $max = $count > 0 ? $id + $count - 1 : $id;

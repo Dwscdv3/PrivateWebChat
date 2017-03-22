@@ -1,5 +1,150 @@
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+html {
+    height: 100%;
+    user-select: none;
+    cursor: default;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-color: gray;
+    background-image: url("/bg.png");
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    text-shadow: 0.1rem 0.1rem 0.25rem black;
+}
+
+.input {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    vertical-align: bottom;
+    padding: 0.5em;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.inputbox {
+    outline: none;
+    border-bottom: 0.1rem solid rgba(255, 255, 255, 0.25);
+    cursor: text;
+}
+
+.channel-tab {
+    display: block;
+    font-size: 4em;
+}
+
+.channel-tab:not(.channel-tab-selected):hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.channel-tab:not(.channel-tab-selected):active {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.channel-tab-selected {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.chat-channel {
+    position: relative;
+    height: 100%;
+}
+
+.chatlog {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0.5em 0.5em 5em 0.5em;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.chat-msg {
+    position: relative;
+    margin: 0.5em 0 0 0;
+}
+
+.chat-msg-me {
+    text-align: right;
+}
+
+.chat-msg-username {
+    opacity: 0.8;
+    font-size: 90%;
+}
+
+.chat-msg-me .chat-msg-username {
+    margin-left: auto;
+}
+
+.chat-msg-bubble {
+    /*font-size: 120%;*/
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5em;
+}
+
+.chat-msg-other .chat-msg-bubble {
+    border-radius: 0 1em 1em 1em;
+}
+
+.chat-msg-me .chat-msg-bubble {
+    border-radius: 1em 0 1em 1em;
+    text-align: left;
+}
+
+.chat-msg-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.chat-msg-overlay:hover {
+    opacity: 1;
+}
+
+.chat-msg-date {
+    font-size: 80%;
+    height: 2.6em;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.chat-msg-other .chat-msg-date {
+    text-align: right;
+    right: 0;
+}
+
+.chat-msg-me .chat-msg-date {
+    text-align: left;
+}
+
+#chat {
+    width: 24em;
+    height: 100%;
+    margin-left: auto;
+}
+
+#channels {
+    margin-right: 4em;
+    height: 100%;
+}
+
+#channelSelector {
+    float: right;
+    width: 4em;
+    height: 100%;
+}
+
+#settingButton {
+    position: absolute;
+    bottom: 0;
 }

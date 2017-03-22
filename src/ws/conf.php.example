@@ -1,0 +1,15 @@
+<?php
+
+# The port that client connects to
+$port = 36522;
+# The port for receiving push request
+$inner_port = 36502;
+
+# SSL Certification
+$context = array(
+    'ssl' => array(
+        'local_cert'  => 'xxx.pem', # Your certificate
+        'local_pk'    => 'xxx.pem', # Your private key
+        'verify_peer' => false
+    )
+);

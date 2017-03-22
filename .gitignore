@@ -1,6 +1,10 @@
 .vscode/
 web.config
 src/data/
+TODO.txt
+Workerman
+ws/conf.php
+.setuplock
 
 .idea
 node_modules

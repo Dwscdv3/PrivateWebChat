@@ -1,13 +1,15 @@
 <?php
 
 require_once __DIR__."/../conf.php";
-require_once __DIR__."/../common/account.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!empty($_REQUEST["token"]) &&
         !empty($_POST["msg"]) &&
         strlen($_REQUEST["token"]) == 32 &&
         ctype_xdigit($_REQUEST["token"])) {
+        require_once __DIR__."/../common/pdo.php";
+        require_once __DIR__."/../common/account.php";
+
         $token = $_REQUEST["token"];
         if (Account::ValidateToken($token)) {
             $msg = str_replace("\n", "<br>", htmlspecialchars($_POST["msg"]));
@@ -15,7 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($query->execute([$token])) {
                 if ($uid = $query->fetch()["id"]) {
                     $add = Data::$pdo->prepare(Data::chatlog_ADD_uid_time_content);
-                    if ($add->execute([$uid, gmdate(Data::DATE_FORMAT, time()), $msg])) {
+                    $now = time();
+                    if ($add->execute([$uid, gmdate(Data::DATE_FORMAT, $now()), $msg])) {
+                        $client = stream_socket_client("tcp://127.0.0.1:36502", $errno, $errmsg, 1);
+                        $data = array(
+                            "id" => $pdo->lastInsertId(),
+                            "uid" => $uid,
+                            "time" => $now
+                        );
+                        fwrite($client, json_encode($data)."\n");
                         echo "Succeed.";
                     } else {
                         // SQL failed

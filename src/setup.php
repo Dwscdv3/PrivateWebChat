@@ -76,7 +76,7 @@ if (isset($domain) &&
         echo "<strong>Create directory:</strong> ".Constants::$AVATAR_PATH."<br>";
     }
 
-    echo "<strong style=\"color: red\"> ; Finally, make sure the \"data\" and \"manage\" directory is forbid to access from web.</strong><br>";
+    echo "<strong style=\"color: red\"> ; Finally, make sure the \"data\", \"manage\" and \"ws\" directory is forbid to access from web.</strong><br>";
     
     file_put_contents("./.setuplock", "");
 }
