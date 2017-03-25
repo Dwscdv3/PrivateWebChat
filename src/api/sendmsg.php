@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $token = $_REQUEST["token"];
         if (Account::ValidateToken($token)) {
-            $msg = str_replace("\n", "<br>", htmlspecialchars($_POST["msg"]));
+            $msg = trim($_POST["msg"]);
             $query = Data::$pdo->prepare(Data::account_QUERY_id_BY_token);
             if ($query->execute([$token])) {
                 if ($uid = $query->fetch()["id"]) {

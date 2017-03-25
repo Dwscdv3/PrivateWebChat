@@ -32,7 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($token = Account::GetToken($_REQUEST["username"], $_POST["password"], $expire)) {
             setcookie("token", $token, $expire);
-            echo $token;
+            echo json_encode(array(
+                "status" => "1",
+                "token" => $token
+            ));
         } else {
             // Authentication failed
         }

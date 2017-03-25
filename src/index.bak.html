@@ -13,6 +13,18 @@
 </head>
 
 <body>
+    <div id="loginbg" hidden>
+        <div id="login">
+            <div>
+                <label for="username">Username: </label>
+                <input type="text" name="username" value="">
+            </div>
+            <div>
+                <label for="password">Password: </label>
+                <input type="password" name="password" value="">
+            </div>
+        </div>
+    </div>
     <div id="chat">
         <div id="channelSelector">
             <div class="material-icons channel-tab channel-tab-selected">home</div>
@@ -41,9 +53,17 @@
                             <div class="chat-msg-date">2017/3/21<br>21:01</div>
                         </div>
                     </div>
+                    <div class="chat-msg chat-msg-other">
+                        <div class="chat-msg-username">琪露诺</div>
+                        <div class="chat-msg-bubble">FFFFFFFFFFFFFFFFFFFFF<br>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</div>
+                        <div class="chat-msg-overlay">
+                            <div class="chat-msg-date">2017/3/23<br>16:32</div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="input">
-                    <div class="inputbox" contenteditable="true" onpaste="pasteAsPlainText(event, this)"></div>
+                    <pre class="inputbox" contenteditable="true" onpaste="pasteAsPlainText(event, this)"></pre>
                 </div>
             </div>
         </div>

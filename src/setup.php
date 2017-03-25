@@ -47,7 +47,8 @@ if (isset($domain) &&
 
     $create_table_chatlog = "
     CREATE TABLE IF NOT EXISTS chatlog (
-        id INT NOT NULL AUTO_INCREMENT,
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        
         uid INT NOT NULL,
         time DATETIME NOT NULL,
         content BLOB NOT NULL,
