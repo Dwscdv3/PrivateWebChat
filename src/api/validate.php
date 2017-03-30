@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__."/../conf.php";
+
 if (!empty($_REQUEST["token"])) {
     $token = $_REQUEST["token"];
 

@@ -2,11 +2,11 @@
 
 require_once __DIR__."/../conf.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (!empty($_REQUEST["username"]) &&
-        !empty($_POST["password"])) {
-        if (!empty($_REQUEST["expire"])) {
-            if (substr($_REQUEST["expire"], 0, 1) === "~") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    if (!empty($_JSON["username"]) &&
+        !empty($_JSON["password"])) {
+        if (!empty($_JSON["expire"])) {
+            if (substr($_JSON["expire"], 0, 1) === "~") {
                 $baseTime = time();
                 if (intval(substr($_REQUEST["expire"], 1) > 0)) {
                     $expire = time() + intval($_REQUEST["expire"]);
@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             } else {
                 $baseTime = 0;
-                if (intval($_REQUEST["expire"]) > 0) {
-                    $expire = intval($_REQUEST["expire"]);
+                if (intval($_JSON["expire"]) > 0) {
+                    $expire = intval($_JSON["expire"]);
                 } else {
                     // Illegal timestamp in `expire`
                     exit();
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once __DIR__."/../common/pdo.php";
         require_once __DIR__."/../common/account.php";
 
-        if ($token = Account::GetToken($_REQUEST["username"], $_POST["password"], $expire)) {
+        if ($token = Account::GetToken($_JSON["username"], $_JSON["password"], $expire)) {
             setcookie("token", $token, $expire);
             echo json_encode(array(
                 "status" => "1",

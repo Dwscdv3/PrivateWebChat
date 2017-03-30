@@ -1,5 +1,12 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && $_SERVER["HTTP_CONTENT_TYPE"] === "application/json") {
+    $_JSON = json_decode(file_get_contents("php://input"), true);
+}
+
 class Constants
 {
     public static $SEPARATOR, $DATA_PATH, $DB_INFO_PATH, $AVATAR_PATH, $IMAGE_PATH;

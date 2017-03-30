@@ -44,11 +44,23 @@ if (isset($domain) &&
 ";
     $sql->exec($create_table_account);
     echo "<strong>Execute:</strong> ".str_replace(" ", "&nbsp;", str_replace("\n", "<br>", $create_table_account));
+    
+    $create_table_channel = "
+    CREATE TABLE IF NOT EXISTS channel (
+        id INT NOT NULL AUTO_INCREMENT,
+        type TINYINT NOT NULL,
+        name VARCHAR(32) NOT NULL,
+        owner INT,
+        PRIMARY KEY (id, username)
+    )
+    ENGINE = InnoDB
+";
+    $sql->exec($create_table_account);
+    echo "<strong>Execute:</strong> ".str_replace(" ", "&nbsp;", str_replace("\n", "<br>", $create_table_account));
 
-    $create_table_chatlog = "
-    CREATE TABLE IF NOT EXISTS chatlog (
+    $create_table_public = "
+    CREATE TABLE IF NOT EXISTS c_0 (
         id BIGINT NOT NULL AUTO_INCREMENT,
-        
         uid INT NOT NULL,
         time DATETIME NOT NULL,
         content BLOB NOT NULL,
@@ -58,6 +70,9 @@ if (isset($domain) &&
 ";
     $sql->exec($create_table_chatlog);
     echo "<strong>Execute:</strong> ".str_replace(" ", "&nbsp;", str_replace("\n", "<br>", $create_table_chatlog));
+    $insert_table_channel_add_public = "INSERT INTO channel (type, name) VALUES (0, 'Public')";
+    $sql->exec($insert_table_channel_add_public);
+    echo "<strong>Execute:</strong> ".str_replace(" ", "&nbsp;", str_replace("\n", "<br>", $insert_table_channel_add_public));
 
     file_put_contents(Constants::$DB_INFO_PATH,
         "$domain\n".

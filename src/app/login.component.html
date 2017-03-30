@@ -1,0 +1,22 @@
+<div id="loginbg">
+    <div id="login">
+        <form>
+            <div>
+                <md-input-container>
+                    <input name="username" type="text" mdInput placeholder="Username" [(ngModel)]="username">
+                </md-input-container>
+            </div>
+            <div>
+                <md-input-container>
+                    <input name="password" type="password" mdInput placeholder="Password" [(ngModel)]="password">
+                </md-input-container>
+            </div>
+            <div>
+                <a md-button [disabled]="!isValid()" (click)="login()" [ngSwitch]="isLoggingIn">
+                    <span *ngSwitchCase="false">Log in</span>
+                    <md-progress-circle mode="indeterminate" *ngSwitchCase="true"></md-progress-circle>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

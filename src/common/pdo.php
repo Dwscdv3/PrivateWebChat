@@ -12,9 +12,9 @@ class Data
                  account_QUERY_id_BY_token = "SELECT id FROM account WHERE token = ?",
                  account_QUERY_ipv4_expire_BY_token = "SELECT ipv4, expire FROM account WHERE token = ?",
                  account_REMOVE_token_ipv4_expire_BY_token = "UPDATE account SET token = NULL, ipv4 = NULL, expire = NULL WHERE token = ?",
-                 chatlog_QUERY_MAX_id = "SELECT MAX(id) FROM chatlog",
-                 chatlog_ADD_uid_time_content = "INSERT INTO chatlog (uid, time, content) VALUES (?, ?, ?)",
-                 chatlog_QUERY_id_uid_time_content_BY_id_RANGE = "SELECT id, uid, time, content FROM chatlog WHERE id >= ? AND id <= ?";
+                 c_QUERY_MAX_id = "SELECT MAX(id) FROM ?",
+                 c_ADD_uid_time_content = "INSERT INTO ? (uid, time, content) VALUES (?, ?, ?)",
+                 c_QUERY_id_uid_time_content_BY_id_RANGE = "SELECT id, uid, time, content FROM ? WHERE id >= ? AND id <= ?";
 
     static function init()
     {

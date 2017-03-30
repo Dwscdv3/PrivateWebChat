@@ -12,7 +12,8 @@ if (!empty($_REQUEST["token"]) &&
         !empty($_REQUEST["countforward"])
     )) {
     $token = $_REQUEST["token"];
-    
+    $cid = isset($_JSON["cid"]) ? intval($_JSON["cid"]) : 0;
+
     $count = empty($_REQUEST["countbackward"])
            ? intval($_REQUEST["countforward"])
            : -intval($_REQUEST["countbackward"]);
@@ -26,8 +27,8 @@ if (!empty($_REQUEST["token"]) &&
 
     if (empty($_REQUEST["id"])) {
         if ($count < 0) {
-            $query = Data::$pdo->prepare(Data::chatlog_QUERY_MAX_id);
-            $query->execute();
+            $query = Data::$pdo->prepare(Data::c_QUERY_MAX_id);
+            $query->execute(["c_$cid"]);
             if ($row = $query->fetch()) {
                 $id = $row[0];
             } else {
@@ -46,8 +47,8 @@ if (!empty($_REQUEST["token"]) &&
     if (Account::ValidateToken($token)) {
         $min = $count > 0 ? $id : $id + $count + 1;
         $max = $count > 0 ? $id + $count - 1 : $id;
-        $query = Data::$pdo->prepare(Data::chatlog_QUERY_id_uid_time_content_BY_id_RANGE);
-        if ($query->execute([$min, $max])) {
+        $query = Data::$pdo->prepare(Data::c_QUERY_id_uid_time_content_BY_id_RANGE);
+        if ($query->execute(["c_$cid", $min, $max])) {
             $jsonObject = array();
             while ($row = $query->fetch()) {
                 array_push($jsonObject, array(

@@ -1,3 +1,5 @@
+@import '/node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css';
+
 html {
     height: 100%;
     user-select: none;
@@ -8,7 +10,7 @@ body {
     height: 100%;
     margin: 0;
     background-color: gray;
-    background-image: url("/bg.png");
+    /*background-image: url("/bg.png");*/
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -16,13 +18,21 @@ body {
     text-shadow: 0.1rem 0.1rem 0.25rem black;
 }
 
-input[type=text],
+/*input[type=text],
 input[type=password] {
     background-color: transparent;
     border: 0 solid rgba(255, 2555, 2555, 0.25);
     border-bottom-width: 0.1rem;
     color: white;
     outline: none;
+}*/
+
+.mat-ripple-element {
+    
+}
+
+.mat-progress-circle path {
+    stroke: #00acc1;
 }
 
 .input {
@@ -139,33 +149,6 @@ input[type=password] {
 
 .chat-msg-me .chat-msg-date {
     text-align: left;
-}
-
-#loginbg {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 10;
-}
-
-#login {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 1em;
-    text-align: center;
-}
-
-#login label {
-    display: inline-block;
-    width: 6em;
-    text-align: right;
 }
 
 #chat {
